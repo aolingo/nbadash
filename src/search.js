@@ -29,6 +29,9 @@ class Search extends React.Component{
                     )
                     console.log(list_of_players);
                 }
+                else {
+                    alert("there is no player named " + info + " !");
+                }
             })
     }
 
