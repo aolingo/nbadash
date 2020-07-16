@@ -9,7 +9,6 @@ class Search extends React.Component{
             players: []
         }
         this.handleChange = this.handleChange.bind(this);
-        this.handleClick = this.handleClick.bind(this);
     }
 
     handleChange(event){
@@ -17,9 +16,6 @@ class Search extends React.Component{
         this.setState({
             [className]: value
         })
-    }
-
-    handleClick(){
         const info = this.state.name;
         axios.get('https://www.balldontlie.io/api/v1/players?search=' + info + '&page=1')
             .then(response => {
@@ -32,9 +28,6 @@ class Search extends React.Component{
                         players: list_of_players
                     })
                 }
-                else {
-                    alert("there is no player named " + info + " !");
-                }
             })
     }
 
@@ -42,7 +35,6 @@ class Search extends React.Component{
         return(
             <div className="search_bar_container">
                 <input className="name" type="text" placeholder="Player Name" onChange={this.handleChange} value={this.state.name} />
-                <button className="search" onClick={this.handleClick}>Search</button>
                 <ul className="list_of_players">
                     {this.state.players.map((value, idx) => (
                         <li key={idx} className="individual_player">
