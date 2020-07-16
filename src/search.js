@@ -2,6 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import Player from './player.jsx';
 
+
+
 class Search extends React.Component {
     constructor(props) {
         super(props);
@@ -13,6 +15,7 @@ class Search extends React.Component {
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.clearAll = this.clearAll.bind(this);
     }
 
     handleChange(event) {
@@ -21,7 +24,7 @@ class Search extends React.Component {
             [className]: value
         })
         const info = this.state.name;
-        if (this.state.name !== ""){
+        if (this.state.name !== "") {
             axios.get('https://www.balldontlie.io/api/v1/players?search=' + info + '&page=1')
                 .then(response => {
                     if (response.data.data.length > 0) {
@@ -43,6 +46,7 @@ class Search extends React.Component {
     }
 
     handleClick(event) {
+        this.clearAll();
         const { id, value } = event.target;
         this.setState({
             selected_player_id: id,
@@ -52,11 +56,17 @@ class Search extends React.Component {
         })
     }
 
+    clearAll() {
+        this.setState({
+            selected_player_id: null,
+            selected_player_name: ""
+        })
+    }
+
     render() {
         return (
             <div className="search_bar_container">
                 <input className="name" type="text" placeholder="Player Name" onChange={this.handleChange} value={this.state.name} />
-                <h3>Selected Player: {this.state.selected_player_name}</h3>
                 <ul className="list_of_players">
                     {this.state.players.map((value, idx) => (
                         <div key={idx}>
@@ -67,7 +77,7 @@ class Search extends React.Component {
                         </div>
                     ))}
                 </ul>
-                {this.state.selected_player_id === null ? null : <Player id={this.state.selected_player_id} />}
+                {this.state.selected_player_id === null ? null : <Player id={this.state.selected_player_id} clearAll={this.clearAll} name={this.state.selected_player_name} />}
             </div>
         )
     }

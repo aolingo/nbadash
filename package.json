@@ -11,6 +11,7 @@
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
     "react-table-6": "^6.11.0",
+    "recharts": "^1.8.5",
     "styled-components": "^5.1.1"
   },
   "scripts": {
