@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ReactTable from 'react-table-6'
+import 'react-table-6/react-table.css'
 import axios from 'axios'
 
 class Player extends Component {
@@ -14,7 +15,7 @@ class Player extends Component {
   componentDidMount() {
     let data = []
     const pid = this.props.id
-    axios.get('https://www.balldontlie.io/api/v1/season_averages?player_ids[]=' + pid + '&season=2010')
+    axios.get('https://www.balldontlie.io/api/v1/season_averages?season=2010&player_ids[]=' + pid)
       .then(response => {
         if (response.data.data.length > 0) {
           response.data.data.map(player =>
@@ -61,15 +62,91 @@ class Player extends Component {
       accessor: 'pid',
     },
     {
+      Header: 'Yr',
+      accessor: 'season'
+    },
+    {
       Header: 'GP',
-      accessor: 'games_played'
+      accessor: 'gp'
+    },
+    {
+      Header: 'MIN',
+      accessor: 'min'
+    },
+    {
+      Header: 'FGM',
+      accessor: 'fgm'
+    },
+    {
+      Header: 'FGA',
+      accessor: 'fga'
+    },
+    {
+      Header: 'FG%',
+      accessor: 'fg_pct'
+    },
+    {
+      Header: 'FG3M',
+      accessor: 'fg3m'
+    },
+    {
+      Header: 'FG3A',
+      accessor: 'fg3a'
+    },
+    {
+      Header: 'FG3%',
+      accessor: 'fg3_pct'
+    },
+    {
+      Header: 'FTM',
+      accessor: 'ftm'
+    },
+    {
+      Header: 'FTA',
+      accessor: 'fta'
+    },
+    {
+      Header: 'FT%',
+      accessor: 'ft_pct'
+    },
+    {
+      Header: 'OREB',
+      accessor: 'oreb'
+    },
+    {
+      Header: 'DREB',
+      accessor: 'dreb'
+    },
+    {
+      Header: 'AST',
+      accessor: 'ast'
+    },
+    {
+      Header: 'STL',
+      accessor: 'stl'
+    },
+    {
+      Header: 'BLK',
+      accessor: 'blk'
+    },
+    {
+      Header: 'TO',
+      accessor: 'turnover'
+    },
+    {
+      Header: 'PF',
+      accessor: 'pf'
+    },
+    {
+      Header: 'PTS',
+      accessor: 'pts'
     }]
 
     return (
       <div>
         <h4>Player Stats</h4>
         <ReactTable
-          data={this.playerData}
+          data={this.state.playerData}
           columns={columns} />
       </div>
     )

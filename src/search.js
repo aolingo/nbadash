@@ -43,26 +43,22 @@ class Search extends React.Component {
     }
 
     render() {
-        if (typeof this.selected_player_id !== 'undefined') {
-            return (
-                <div className="search_bar_container">
-                    <input className="name" type="text" placeholder="Player Name" onChange={this.handleChange} value={this.state.name} />
-                    <ul className="list_of_players">
-                        {this.state.players.map((value, idx) => (
-                            <div key={idx}>
-                                <button id={value[3]} className="individual_player" onClick={this.handleClick}>
-                                    {`${value[1]}, ${value[0]}   ${value[2]}`}
-                                </button>
-                                <br />
-                            </div>
-                        ))}
-                    </ul>
-                </div>
-            )
-        } else {
-            // only show Player screen if a player has been selected
-            return (<Player id={this.state.selected_player_id} />)
-        }
+        return (
+            <div className="search_bar_container">
+                <input className="name" type="text" placeholder="Player Name" onChange={this.handleChange} value={this.state.name} />
+                <ul className="list_of_players">
+                    {this.state.players.map((value, idx) => (
+                        <div key={idx}>
+                            <button id={value[3]} className="individual_player" onClick={this.handleClick}>
+                                {`${value[1]}, ${value[0]}   ${value[2]}`}
+                            </button>
+                            <br />
+                        </div>
+                    ))}
+                </ul>
+                {this.state.selected_player_id === null ? null : <Player id={this.state.selected_player_id} />}
+            </div>
+        )
     }
 }
 
