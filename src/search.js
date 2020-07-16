@@ -8,7 +8,8 @@ class Search extends React.Component {
         this.state = {
             name: "",
             players: [],
-            selected_player_id: null
+            selected_player_id: null,
+            selected_player_name: ""
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -20,25 +21,34 @@ class Search extends React.Component {
             [className]: value
         })
         const info = this.state.name;
-        axios.get('https://www.balldontlie.io/api/v1/players?search=' + info + '&page=1')
-            .then(response => {
-                if (response.data.data.length > 0) {
-                    const list_of_players = [];
-                    response.data.data.map(player =>
-                        list_of_players.push([player.first_name, player.last_name, player.team.abbreviation, player.id])
-                    )
-                    this.setState({
-                        players: list_of_players
-                    })
-                }
+        if (this.state.name !== ""){
+            axios.get('https://www.balldontlie.io/api/v1/players?search=' + info + '&page=1')
+                .then(response => {
+                    if (response.data.data.length > 0) {
+                        const list_of_players = [];
+                        response.data.data.map(player =>
+                            list_of_players.push([player.first_name, player.last_name, player.team.abbreviation, player.id])
+                        )
+                        this.setState({
+                            players: list_of_players
+                        })
+                    }
+                })
+        } else {
+            this.setState({
+                players: []
             })
+        }
+
     }
 
     handleClick(event) {
-        const { id } = event.target;
+        const { id, value } = event.target;
         this.setState({
             selected_player_id: id,
-            name: ""
+            name: "",
+            players: [],
+            selected_player_name: value
         })
     }
 
@@ -46,10 +56,11 @@ class Search extends React.Component {
         return (
             <div className="search_bar_container">
                 <input className="name" type="text" placeholder="Player Name" onChange={this.handleChange} value={this.state.name} />
+                <h3>Selected Player: {this.state.selected_player_name}</h3>
                 <ul className="list_of_players">
                     {this.state.players.map((value, idx) => (
                         <div key={idx}>
-                            <button id={value[3]} className="individual_player" onClick={this.handleClick}>
+                            <button id={value[3]} value={`${value[0]} ${value[1]}`} className="individual_player" onClick={this.handleClick}>
                                 {`${value[1]}, ${value[0]}   ${value[2]}`}
                             </button>
                             <br />
