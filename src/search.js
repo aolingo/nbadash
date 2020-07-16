@@ -26,7 +26,7 @@ class Search extends React.Component{
                 if (response.data.data.length > 0){
                     const list_of_players = [];
                     response.data.data.map(player => 
-                        list_of_players.push(player.first_name)
+                        list_of_players.push([player.first_name, player.last_name, player.team.abbreviation, player.id])
                     )
                     this.setState({
                         players: list_of_players
@@ -46,7 +46,7 @@ class Search extends React.Component{
                 <ul className="list_of_players">
                     {this.state.players.map((value, idx) => (
                         <li key={idx} className="individual_player">
-                            {value}
+                            {`${value[1]}, ${value[0]}   ${value[2]}`}
                         </li>
                     ))}
                 </ul>
