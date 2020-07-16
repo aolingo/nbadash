@@ -1,46 +1,64 @@
 import React, { Component } from 'react'
-import ReactTable from 'react-table'
-import 'react-table/react-table.css'
-import styled from 'styled-components'
+import ReactTable from 'react-table-6'
+import axios from 'axios'
 
 class Player extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      playerData: []
+    }
+  }
 
-  //the id of this player can be accessed with this.props.id
+  componentDidMount() {
+    let data = []
+    const pid = this.props.id
+    axios.get('https://www.balldontlie.io/api/v1/season_averages?player_ids[]=' + pid + '&season=2010')
+      .then(response => {
+        if (response.data.data.length > 0) {
+          response.data.data.map(player =>
+            data.push({
+              pid: player.player_id,
+              season: player.season,
+              gp: player.games_played,
+              min: player.min,
+              fgm: player.fgm,
+              fga: player.fga,
+              fg3m: player.fg3m,
+              fg3a: player.fg3a,
+              ftm: player.ftm,
+              fta: player.fta,
+              oreb: player.oreb,
+              dreb: player.dreb,
+              reb: player.reb,
+              ast: player.ast,
+              stl: player.stl,
+              blk: player.blk,
+              turnover: player.turnover,
+              pf: player.pf,
+              pts: player.pts,
+              fg_pct: player.fg_pct,
+              fg3_pct: player.fg3_pct,
+              ft_pct: player.ft_pct
+            })
+          )
+          this.setState({
+            playerData: data
+          })
+        }
+      })
+      .catch(err => console.log(err))
+  }
 
-/*
-
-"games_played":37,
-      "player_id":237,
-      "season":2018,
-      "min":"34:46",
-      "fgm":9.92,
-      "fga":19.22,
-      "fg3m":2.05,
-      "fg3a":5.73,
-      "ftm":5.08,
-      "fta":7.54,
-      "oreb":0.95,
-      "dreb":7.59,
-      "reb":8.54,
-      "ast":7.38,
-      "stl":1.32,
-      "blk":0.65,
-      "turnover":3.49,
-      "pf":1.59,
-      "pts":26.97,
-      "fg_pct":0.516,
-      "fg3_pct":0.358,
-      "ft_pct":0.674
-*/
-
+  // Need player id and player name, team name from parent class
 
   render() {
 
-    const columns =[{
-      id: 'this.props.id',
-      Header: 'PlayerID',
-      accessor: 'this.props.id',
+    const columns = [{
+      id: 'pid',
+      Header: 'Player ID',
+      accessor: 'pid',
     },
     {
       Header: 'GP',
@@ -49,7 +67,10 @@ class Player extends Component {
 
     return (
       <div>
-        <ReactTable data={data} columns={columns}/>
+        <h4>Player Stats</h4>
+        <ReactTable
+          data={this.playerData}
+          columns={columns} />
       </div>
     )
   }
