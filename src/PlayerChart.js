@@ -62,7 +62,7 @@ export default class PlayerChart extends Component {
           data[0].A = response.data.data[0].pts;
           data[1].A = Math.min(4*(response.data.data[0].ast), 40);
           data[2].A = Math.min(3*(response.data.data[0].reb), 40);
-          data[3].A = Math.min(20*(response.data.data[0].stl), 40);
+          data[3].A = Math.min(15*(response.data.data[0].stl), 40);
           data[4].A = Math.min(15*(response.data.data[0].blk), 40);
           data[5].A = parseInt(response.data.data[0].min);
         }
