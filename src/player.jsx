@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ReactTable from 'react-table-6'
 import 'react-table-6/react-table.css'
 import axios from 'axios'
-import PlayerChart from './PlayerChart'
+//import PlayerChart from './PlayerChart'
 import styled from 'styled-components'
 import './player.css'
 
@@ -167,7 +167,7 @@ class Player extends Component {
     return (
       <Intro>
         <div>
-          <div className="stats" >
+          <div>
             <div>
               <h4>{this.props.name}</h4>
               <ReactTable
@@ -176,9 +176,6 @@ class Player extends Component {
                 columns={columns} />
             </div>
 
-            <div>
-              <PlayerChart className="radar" />
-            </div>
           </div>
 
         </div>

@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import Player from './player.jsx';
-
+import './search.css'
+import PlayerChart from './PlayerChart'
 
 
 class Search extends React.Component {
@@ -19,9 +20,9 @@ class Search extends React.Component {
     }
 
     handleChange(event) {
-        const { className, value } = event.target;
+        const { name, value } = event.target;
         this.setState({
-            [className]: value
+            [name]: value
         })
         const info = this.state.name;
         if (this.state.name !== "") {
@@ -66,18 +67,24 @@ class Search extends React.Component {
     render() {
         return (
             <div className="search_bar_container">
-                <input className="name" type="text" placeholder="Player Name" onChange={this.handleChange} value={this.state.name} />
+                <div className="form__group field">
+                    <input className="form__field" name="name" id="name" type="text" placeholder="Player Name" onChange={this.handleChange} value={this.state.name} required />
+                    <label htmlFor="name" className="form__label" >Player Name</label>
+                </div>
                 <ul className="list_of_players">
                     {this.state.players.map((value, idx) => (
                         <div key={idx}>
                             <button id={value[3]} value={`${value[0]} ${value[1]}`} className="individual_player" onClick={this.handleClick}>
-                                {`${value[1]}, ${value[0]}   ${value[2]}`}
+                                {`${value[0]} ${value[1]} - ${value[2]}`}
                             </button>
                             <br />
                         </div>
                     ))}
                 </ul>
-                {this.state.selected_player_id === null ? null : <Player id={this.state.selected_player_id} clearAll={this.clearAll} name={this.state.selected_player_name} />}
+                <div className="stats">
+                    {this.state.selected_player_id === null ? null : <Player id={this.state.selected_player_id} name={this.state.selected_player_name} />}
+                    {this.state.selected_player_id === null ? null : <PlayerChart id={this.state.selected_player_id} />}
+                </div>
             </div>
         )
     }
