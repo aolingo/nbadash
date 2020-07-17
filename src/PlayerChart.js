@@ -13,12 +13,12 @@ export default class PlayerChart extends Component {
       selected_player_id: null,
       selected_season: 2019,
       data: [
-        { subject: 'PTS', A: 0, B: 110, fullMark: 40 },
-        { subject: 'AST', A: 0, B: 130, fullMark: 40 },
-        { subject: 'REB', A: 0, B: 130, fullMark: 40 },
-        { subject: 'STL', A: 0, B: 100, fullMark: 40 },
-        { subject: 'BLK', A: 0, B: 90, fullMark: 40 },
-        { subject: 'MIN', A: 0, B: 85, fullMark: 40 },
+        { subject: 'PTS', A: 0, B: 0, fullMark: 40 },
+        { subject: 'AST', A: 0, B: 0, fullMark: 40 },
+        { subject: 'REB', A: 0, B: 0, fullMark: 40 },
+        { subject: 'STL', A: 0, B: 0, fullMark: 40 },
+        { subject: 'BLK', A: 0, B: 0, fullMark: 40 },
+        { subject: 'MIN', A: 0, B: 0, fullMark: 40 },
       ]
     }
   }
@@ -47,12 +47,12 @@ export default class PlayerChart extends Component {
 
   async getRadarWithPid(pid, season) {
     let data = [
-      { subject: 'PTS', A: 0, B: 110, fullMark: 30 },
-      { subject: 'AST', A: 0, B: 130, fullMark: 20 },
-      { subject: 'REB', A: 0, B: 130, fullMark: 20 },
-      { subject: 'STL', A: 0, B: 100, fullMark: 4 },
-      { subject: 'BLK', A: 0, B: 90, fullMark: 4 },
-      { subject: 'MIN', A: 0, B: 85, fullMark: 40 },
+      { subject: 'PTS', A: 0, B: 0, fullMark: 40 },
+      { subject: 'AST', A: 0, B: 0, fullMark: 40 },
+      { subject: 'REB', A: 0, B: 0, fullMark: 40 },
+      { subject: 'STL', A: 0, B: 0, fullMark: 40 },
+      { subject: 'BLK', A: 0, B: 0, fullMark: 40 },
+      { subject: 'MIN', A: 0, B: 0, fullMark: 40 },
     ]
 
     let url = 'https://www.balldontlie.io/api/v1/season_averages?season=' + season + '&player_ids[]=' + pid;
@@ -60,10 +60,10 @@ export default class PlayerChart extends Component {
       .then(response => {
         if (response.data.data.length > 0) {
           data[0].A = response.data.data[0].pts;
-          data[1].A = 4*(response.data.data[0].ast);
-          data[2].A = 3*(response.data.data[0].reb);
-          data[3].A = 20*(response.data.data[0].stl);
-          data[4].A = 20*(response.data.data[0].blk);
+          data[1].A = Math.min(4*(response.data.data[0].ast), 40);
+          data[2].A = Math.min(3*(response.data.data[0].reb), 40);
+          data[3].A = Math.min(20*(response.data.data[0].stl), 40);
+          data[4].A = Math.min(15*(response.data.data[0].blk), 40);
           data[5].A = parseInt(response.data.data[0].min);
         }
       })
