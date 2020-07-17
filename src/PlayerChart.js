@@ -33,6 +33,9 @@ export default class PlayerChart extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.id !== prevProps.id) {
+      this.setState({
+        selected_season: 2019
+      })
       this.getRadarWithPid(this.props.id, 2019)
     }
   }
@@ -40,7 +43,8 @@ export default class PlayerChart extends Component {
   componentDidMount() {
     const pid = this.props.id
     this.setState({
-      selected_player_id: pid
+      selected_player_id: pid,
+      selected_season: 2019
     })
     this.getRadarWithPid(pid, 2019);
   }
