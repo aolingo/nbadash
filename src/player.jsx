@@ -177,7 +177,7 @@ class Player extends Component {
             </div>
 
             <div>
-              <PlayerChart className="radar" />
+              <PlayerChart className="radar" id={this.state.selected_player_id} />
             </div>
           </div>
 
