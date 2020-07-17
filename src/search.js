@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Player from './player.jsx';
 import './search.css'
+import PlayerChart from './PlayerChart'
 
 
 class Search extends React.Component {
@@ -68,7 +69,7 @@ class Search extends React.Component {
             <div className="search_bar_container">
                 <div className="form__group field">
                     <input className="form__field" name="name" id="name" type="text" placeholder="Player Name" onChange={this.handleChange} value={this.state.name} required />
-                    <label for="name" className="form__label" >Player Name</label>
+                    <label htmlFor="name" className="form__label" >Player Name</label>
                 </div>
                 <ul className="list_of_players">
                     {this.state.players.map((value, idx) => (
@@ -80,7 +81,10 @@ class Search extends React.Component {
                         </div>
                     ))}
                 </ul>
-                {this.state.selected_player_id === null ? null : <Player id={this.state.selected_player_id} clearAll={this.clearAll} name={this.state.selected_player_name} />}
+                <div className="stats">
+                    {this.state.selected_player_id === null ? null : <Player id={this.state.selected_player_id} clearAll={this.clearAll} name={this.state.selected_player_name} />}
+                    {this.state.selected_player_id === null ? null : <PlayerChart id={this.state.selected_player_id} />}
+                </div>
             </div>
         )
     }

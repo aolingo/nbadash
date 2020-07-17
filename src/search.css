@@ -56,3 +56,9 @@
   .form__field:required, .form__field:invalid {
     box-shadow: none;
   }
+
+  .stats{
+    display: grid;
+    grid-template-columns: 850px auto;
+    grid-gap: 20px;
+}
