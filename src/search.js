@@ -82,7 +82,7 @@ class Search extends React.Component {
                     ))}
                 </ul>
                 <div className="stats">
-                    {this.state.selected_player_id === null ? null : <Player id={this.state.selected_player_id} clearAll={this.clearAll} name={this.state.selected_player_name} />}
+                    {this.state.selected_player_id === null ? null : <Player id={this.state.selected_player_id} name={this.state.selected_player_name} />}
                     {this.state.selected_player_id === null ? null : <PlayerChart id={this.state.selected_player_id} />}
                 </div>
             </div>
